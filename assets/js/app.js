@@ -3,7 +3,7 @@
 
 var cards = document.querySelector("#now");
 
-function render_page(move_data) {
+function render_page(movie_data) {
     
 }
 
