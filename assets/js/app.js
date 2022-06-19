@@ -8,7 +8,7 @@ function render_page(movie_data) {
     console.log(movie_data.results[0]);
 
     var col = document.createElement("div");
-    col.classList.add("column", "is-two-thirds", "has-background-primary"); 
+    col.classList.add("column", "is-four-fifths", "has-background-primary"); 
 
     movieInfo.appendChild(col);
 
@@ -31,6 +31,8 @@ function render_page(movie_data) {
     movieTitle.textContent = movie_data.results[0].title;
 
     primaryInfo.appendChild(movieTitle);
+
+    // var genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=094c84db597deb498f8d90a2474513fe&language=en-US";
 
     // genre country year language movie length rating
     var nestCols = document.createElement("div");
@@ -155,7 +157,7 @@ function render_page(movie_data) {
 
     //img
     var newCol = document.createElement("div");
-    newCol.classList.add("column", "is-two-fifths");
+    newCol.classList.add("column", "is-one-quarter");
 
     newCols.appendChild(newCol);
 
@@ -195,6 +197,12 @@ function render_page(movie_data) {
     newCol_1.appendChild(cast);
 
     // review
+    var reviewTitle = document.createElement("h3");
+    reviewTitle.classList.add("subtitle");
+    reviewTitle.textContent = "Review";
+
+    newCol_1.appendChild(reviewTitle);
+
     var review = document.createElement("ul");
     review.setAttribute("id", "review_list");
 
@@ -218,8 +226,9 @@ function render_page(movie_data) {
 
     info.appendChild(secondaryInfo);
     
-    var trailer = document.createElement("p");
+    var trailer = document.createElement("h3");
     trailer.setAttribute("id", "trailer");
+    trailer.textContent = "Trailer"
 
     secondaryInfo.appendChild(trailer);
 
@@ -251,95 +260,101 @@ function render_page(movie_data) {
 
     stream.appendChild(ol);
 
-    // var data = movie_data.results[0];
+    var data = movie_data.results[0];
 
-    // var list = document.createElement("li");
-    // list.classList.add("streamer");
-    // list.textContent = data.streamingInfo;
+    // create watch online list 
+    for (var property in data.streamingInfo) {
+        var list = document.createElement("li");
+        list.classList.add("streamer");
+        list.textContent = property;
 
-    // ol.appendChild(list);
-        
+        ol.appendChild(list);
+    }
+
+    // create watch local list
+    var localWatch = document.createElement("div");
+    localWatch.setAttribute("id", "watch_local");
+
+    watch.appendChild(localWatch);
+
+    var localTitle = document.createElement("h2");
+    localTitle.classList.add("title", "mt-4");
+    localTitle.textContent = "Watch near you";
+
+    localWatch.appendChild(localTitle);
+
+    var listTime_1 = document.createElement("li");
+    listTime_1.classList.add("showtime");
+    listTime_1.textContent = "";
+
+    var listTime_2 = document.createElement("li");
+    listTime_2.classList.add("showtime");
+    listTime_2.textContent = "";
+
+    localTitle.appendChild(listTime_1);
+    localTitle.appendChild(listTime_2);
+
 
     // console.log(data.streamingInfo);
-
-
 
     // console.log(movieInfo);
 
 }
 
+// function open() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function open() {
-
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
+//     var requestOptions = {
+//         method: 'GET',
+//         redirect: 'follow'
+//     };
     
-    fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=094c84db597deb498f8d90a2474513fe&language=en-US&page=1&region=US", requestOptions).then(function(response) {
-        response.json().then(function(data) { 
-            // console.log(data);
-            // count: data.results.length
-            for (var i=0; i<data.results.length; i++) {
-                // console.log(data.results[i].poster_path);
-                var backImage = data.results[i].poster_path;
-                var backtitle = data.results[i].original_title;
+//     fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=094c84db597deb498f8d90a2474513fe&language=en-US&page=1&region=US", requestOptions).then(function(response) {
+//         response.json().then(function(data) { 
+//             // console.log(data);
+//             // count: data.results.length
+//             for (var i=0; i<data.results.length; i++) {
+//                 // console.log(data.results[i].poster_path);
+//                 var backImage = data.results[i].poster_path;
+//                 var backtitle = data.results[i].original_title;
 
-                var movieCardImage = "https://image.tmdb.org/t/p/w500" + backImage;
+//                 var movieCardImage = "https://image.tmdb.org/t/p/w500" + backImage;
 
-                // console.log(movieCardImage);
+//                 // console.log(movieCardImage);
 
-                var col = document.createElement("div");
-                col.classList.add("column", "is-narrow", "is-one-fifth");  
+//                 var col = document.createElement("div");
+//                 col.classList.add("column", "is-narrow", "is-one-fifth");  
                 
-                var card = document.createElement("div");
-                card.classList.add("card");
+//                 var card = document.createElement("div");
+//                 card.classList.add("card");
 
-                var cardImage = document.createElement("div");
-                cardImage.classList.add("card-image");
+//                 var cardImage = document.createElement("div");
+//                 cardImage.classList.add("card-image");
 
-                var moviePoster = document.createElement("figure");
-                moviePoster.classList.add("image");
+//                 var moviePoster = document.createElement("figure");
+//                 moviePoster.classList.add("image");
                 
-                var pic = document.createElement("img");
-                pic.setAttribute("src", movieCardImage);
+//                 var pic = document.createElement("img");
+//                 pic.setAttribute("src", movieCardImage);
 
-                var cardContent = document.createElement("div");
-                cardContent.classList.add("card-content", "has-text-centered");
+//                 var cardContent = document.createElement("div");
+//                 cardContent.classList.add("card-content", "has-text-centered");
 
-                var contentTitle = document.createElement("p");
-                contentTitle.classList.add("title", "is-5");
-                contentTitle.textContent = backtitle;
+//                 var contentTitle = document.createElement("p");
+//                 contentTitle.classList.add("title", "is-5");
+//                 contentTitle.textContent = backtitle;
 
-                cards.appendChild(col);
-                col.appendChild(card);
-                card.appendChild(cardImage);
-                cardImage.appendChild(moviePoster);
-                moviePoster.appendChild(pic);
-                card.appendChild(cardContent);
-                cardContent.appendChild(contentTitle);
+//                 cards.appendChild(col);
+//                 col.appendChild(card);
+//                 card.appendChild(cardImage);
+//                 cardImage.appendChild(moviePoster);
+//                 moviePoster.appendChild(pic);
+//                 card.appendChild(cardContent);
+//                 cardContent.appendChild(contentTitle);
 
-            }
-        })
-    }).catch(error => console.log('error', error));    
-}
+//             }
+//         })
+//     }).catch(error => console.log('error', error));    
+// }
 
 // open();
 
