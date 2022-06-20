@@ -26,13 +26,14 @@ var getWatchApi = function(movie){
      will be true. */ 
      if (response.ok) {   
         response.json().then(function(data) {
-            console.log(data);
+            // console.log(data);
         movieTerm= data;    
+
+            // displayWatchInfo(movieTerm);
+            render_page(movieTerm);
+        });
             displayWatchInfo(movieTerm);
      });
-     //if the ok property is false we know that the request was unsuccessful. 
-       } else {
-         alert("Error: There was a problem with your request");
        }
     })
     //network error - if you want to test a network error disconnect from the internet and try a search
